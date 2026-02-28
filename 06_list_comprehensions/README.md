@@ -71,15 +71,6 @@ largas = [p for p in palabras if len(p) > 4]
 # ["estrella", "universo"]
 ```
 
-### Filtrar y transformar
-
-```python
-# Cuadrados de los números pares
-numeros = [1, 2, 3, 4, 5, 6]
-cuadrados_pares = [n ** 2 for n in numeros if n % 2 == 0]
-# [4, 16, 36]
-```
-
 ---
 
 ## Map: aplicar función a cada elemento
