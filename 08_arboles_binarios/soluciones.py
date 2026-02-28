@@ -31,7 +31,6 @@ class ArbolBinarioSimpleRecursivo:
             self._agregar_recursivo(self.raiz, valor)
 
     def _agregar_recursivo(self, nodo, valor):
-        # Usamos una función auxiliar porque necesitamos pasar el nodo actual
         if valor < nodo.valor:
             if nodo.izquierdo is None:
                 nodo.izquierdo = Nodo(valor)
@@ -99,42 +98,14 @@ class ArbolBinarioSimpleIterativo:
 
 
 # =============================================================================
-# EJERCICIO COMPLEJO - VERSIÓN RECURSIVA
+# EJERCICIO COMPLEJO - HEREDA DEL SIMPLE (versión recursiva)
 # =============================================================================
 
-class ArbolBinarioComplejoRecursivo:
-    def __init__(self):
-        self.raiz = None
-
-    def agregar(self, valor):
-        if self.raiz is None:
-            self.raiz = Nodo(valor)
-        else:
-            self._agregar_recursivo(self.raiz, valor)
-
-    def _agregar_recursivo(self, nodo, valor):
-        if valor < nodo.valor:
-            if nodo.izquierdo is None:
-                nodo.izquierdo = Nodo(valor)
-            else:
-                self._agregar_recursivo(nodo.izquierdo, valor)
-        else:
-            if nodo.derecho is None:
-                nodo.derecho = Nodo(valor)
-            else:
-                self._agregar_recursivo(nodo.derecho, valor)
-
-    def contiene(self, valor):
-        return self._contiene_recursivo(self.raiz, valor)
-
-    def _contiene_recursivo(self, nodo, valor):
-        if nodo is None:
-            return False
-        if valor == nodo.valor:
-            return True
-        if valor < nodo.valor:
-            return self._contiene_recursivo(nodo.izquierdo, valor)
-        return self._contiene_recursivo(nodo.derecho, valor)
+class ArbolBinarioConRecorridoRecursivo(ArbolBinarioSimpleRecursivo):
+    """
+    Hereda agregar() y contiene() de ArbolBinarioSimpleRecursivo.
+    Solo agrega el método recorrido_inorden().
+    """
 
     def recorrido_inorden(self):
         resultado = []
@@ -150,45 +121,14 @@ class ArbolBinarioComplejoRecursivo:
 
 
 # =============================================================================
-# EJERCICIO COMPLEJO - VERSIÓN ITERATIVA (con while y pila)
+# EJERCICIO COMPLEJO - HEREDA DEL SIMPLE (versión iterativa)
 # =============================================================================
 
-class ArbolBinarioComplejoIterativo:
-    def __init__(self):
-        self.raiz = None
-
-    def agregar(self, valor):
-        nuevo = Nodo(valor)
-
-        if self.raiz is None:
-            self.raiz = nuevo
-            return
-
-        actual = self.raiz
-        while True:
-            if valor < actual.valor:
-                if actual.izquierdo is None:
-                    actual.izquierdo = nuevo
-                    return
-                actual = actual.izquierdo
-            else:
-                if actual.derecho is None:
-                    actual.derecho = nuevo
-                    return
-                actual = actual.derecho
-
-    def contiene(self, valor):
-        actual = self.raiz
-
-        while actual is not None:
-            if valor == actual.valor:
-                return True
-            if valor < actual.valor:
-                actual = actual.izquierdo
-            else:
-                actual = actual.derecho
-
-        return False
+class ArbolBinarioConRecorridoIterativo(ArbolBinarioSimpleIterativo):
+    """
+    Hereda agregar() y contiene() de ArbolBinarioSimpleIterativo.
+    Solo agrega el método recorrido_inorden().
+    """
 
     def recorrido_inorden(self):
         # Para hacer inorden iterativo, necesitamos una pila

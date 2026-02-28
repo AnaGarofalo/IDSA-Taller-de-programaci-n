@@ -1,19 +1,25 @@
-from ejercicio_complejo import ArbolBinario, Nodo
+from ejercicio_complejo import ArbolBinarioConRecorrido
+from ejercicio_simple import ArbolBinario
+
+
+def test_hereda_de_arbol_binario():
+    """ArbolBinarioConRecorrido debe heredar de ArbolBinario."""
+    assert issubclass(ArbolBinarioConRecorrido, ArbolBinario)
 
 
 def test_inorden_vacio():
-    arbol = ArbolBinario()
+    arbol = ArbolBinarioConRecorrido()
     assert arbol.recorrido_inorden() == []
 
 
 def test_inorden_un_elemento():
-    arbol = ArbolBinario()
+    arbol = ArbolBinarioConRecorrido()
     arbol.agregar(5)
     assert arbol.recorrido_inorden() == [5]
 
 
 def test_inorden_tres_elementos():
-    arbol = ArbolBinario()
+    arbol = ArbolBinarioConRecorrido()
     arbol.agregar(5)
     arbol.agregar(3)
     arbol.agregar(8)
@@ -26,7 +32,7 @@ def test_inorden_tres_elementos():
 
 
 def test_inorden_completo():
-    arbol = ArbolBinario()
+    arbol = ArbolBinarioConRecorrido()
     arbol.agregar(5)
     arbol.agregar(3)
     arbol.agregar(8)
@@ -44,7 +50,7 @@ def test_inorden_completo():
 
 
 def test_inorden_solo_izquierda():
-    arbol = ArbolBinario()
+    arbol = ArbolBinarioConRecorrido()
     arbol.agregar(5)
     arbol.agregar(4)
     arbol.agregar(3)
@@ -55,7 +61,7 @@ def test_inorden_solo_izquierda():
 
 
 def test_inorden_solo_derecha():
-    arbol = ArbolBinario()
+    arbol = ArbolBinarioConRecorrido()
     arbol.agregar(1)
     arbol.agregar(2)
     arbol.agregar(3)
@@ -66,7 +72,7 @@ def test_inorden_solo_derecha():
 
 
 def test_inorden_orden_insercion_aleatorio():
-    arbol = ArbolBinario()
+    arbol = ArbolBinarioConRecorrido()
     # Insertar en orden aleatorio
     arbol.agregar(7)
     arbol.agregar(2)
@@ -81,7 +87,7 @@ def test_inorden_orden_insercion_aleatorio():
 
 
 def test_inorden_con_duplicados():
-    arbol = ArbolBinario()
+    arbol = ArbolBinarioConRecorrido()
     arbol.agregar(5)
     arbol.agregar(3)
     arbol.agregar(5)
@@ -92,7 +98,7 @@ def test_inorden_con_duplicados():
 
 
 def test_inorden_negativos():
-    arbol = ArbolBinario()
+    arbol = ArbolBinarioConRecorrido()
     arbol.agregar(0)
     arbol.agregar(-5)
     arbol.agregar(5)
@@ -103,7 +109,7 @@ def test_inorden_negativos():
 
 
 def test_inorden_muchos_elementos():
-    arbol = ArbolBinario()
+    arbol = ArbolBinarioConRecorrido()
     valores = [50, 25, 75, 10, 30, 60, 90, 5, 15, 27, 35]
     for v in valores:
         arbol.agregar(v)

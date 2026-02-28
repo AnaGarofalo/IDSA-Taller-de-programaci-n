@@ -51,35 +51,12 @@ class ListaEnlazadaSimple:
         actual.siguiente = nuevo
 
 
-# Ejercicio complejo: Lista enlazada con invertir
-class ListaEnlazadaCompleja:
-    def __init__(self):
-        self.cabeza = None
-
-    def agregar(self, valor, posicion=0):
-        nuevo = Nodo(valor)
-
-        if posicion == 0 or self.cabeza is None:
-            nuevo.siguiente = self.cabeza
-            self.cabeza = nuevo
-            return
-
-        actual = self.cabeza
-        for _ in range(posicion - 1):
-            if actual.siguiente is None:
-                break
-            actual = actual.siguiente
-
-        nuevo.siguiente = actual.siguiente
-        actual.siguiente = nuevo
-
-    def a_lista(self):
-        resultado = []
-        actual = self.cabeza
-        while actual is not None:
-            resultado.append(actual.valor)
-            actual = actual.siguiente
-        return resultado
+# Ejercicio complejo: Hereda de ListaEnlazadaSimple y agrega invertir()
+class ListaEnlazadaInvertible(ListaEnlazadaSimple):
+    """
+    Hereda agregar() y a_lista() de ListaEnlazadaSimple.
+    Solo agrega el método invertir().
+    """
 
     def invertir(self):
         anterior = None
