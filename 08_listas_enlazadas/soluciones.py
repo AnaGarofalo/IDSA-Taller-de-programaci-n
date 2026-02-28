@@ -14,7 +14,20 @@ class ListaEnlazadaSimple:
     def __init__(self):
         self.cabeza = None
 
-    def agregar(self, valor):
+    def a_lista(self):
+        resultado = []
+        actual = self.cabeza
+        while actual is not None:
+            resultado.append(actual.valor)
+            actual = actual.siguiente
+        return resultado
+
+    def agregar_al_principio(self, valor):
+        nuevo = Nodo(valor)
+        nuevo.siguiente = self.cabeza
+        self.cabeza = nuevo
+
+    def agregar_al_final(self, valor):
         nuevo = Nodo(valor)
         if self.cabeza is None:
             self.cabeza = nuevo
@@ -23,14 +36,6 @@ class ListaEnlazadaSimple:
             while actual.siguiente is not None:
                 actual = actual.siguiente
             actual.siguiente = nuevo
-
-    def a_lista(self):
-        resultado = []
-        actual = self.cabeza
-        while actual is not None:
-            resultado.append(actual.valor)
-            actual = actual.siguiente
-        return resultado
 
 
 # Ejercicio complejo: Lista enlazada con invertir

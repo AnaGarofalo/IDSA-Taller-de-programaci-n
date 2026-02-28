@@ -1,15 +1,21 @@
 # Tips para los ejercicios
 
-## Ejercicio simple (agregar y a_lista)
-
-Para agregar:
-- Crear un nuevo Nodo con el valor
-- Si la lista está vacía, el nuevo nodo es la cabeza
-- Si no, recorrer hasta el último nodo y conectar el nuevo
+## Ejercicio simple (a_lista, agregar_al_principio, agregar_al_final)
 
 Para a_lista:
 - Crear una lista vacía de Python
-- Recorrer cada nodo y agregar su valor a la lista
+- Recorrer cada nodo desde la cabeza
+- Agregar cada valor a la lista
+
+Para agregar_al_principio (es O(1), no hay que recorrer nada):
+- Crear un nuevo Nodo
+- El nuevo nodo apunta a la cabeza actual
+- La cabeza ahora es el nuevo nodo
+
+Para agregar_al_final (es O(n), hay que recorrer todo):
+- Crear un nuevo Nodo
+- Si la lista está vacía, el nuevo nodo es la cabeza
+- Si no, recorrer hasta el último nodo y conectar el nuevo
 
 ## Ejercicio complejo (invertir)
 

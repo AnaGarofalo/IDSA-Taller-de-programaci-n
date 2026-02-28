@@ -2,24 +2,25 @@
 EJERCICIO: Lista enlazada básica
 
 Completá la clase ListaEnlazada implementando los métodos:
-- agregar(valor): Agrega un elemento al final de la lista
-- a_lista(): Devuelve una lista de Python con todos los elementos
+1. a_lista(): Devuelve una lista de Python con todos los elementos
+2. agregar_al_principio(valor): Agrega un elemento al inicio de la lista
+3. agregar_al_final(valor): Agrega un elemento al final de la lista
 
 La clase Nodo ya está implementada, no la modifiques.
 
 Ejemplo:
     lista = ListaEnlazada()
 
-    lista.a_lista()      → []
+    lista.a_lista()              → []
 
-    lista.agregar(5)
-    lista.a_lista()      → [5]
+    lista.agregar_al_principio(5)
+    lista.a_lista()              → [5]
 
-    lista.agregar(10)
-    lista.a_lista()      → [5, 10]
+    lista.agregar_al_final(10)
+    lista.a_lista()              → [5, 10]
 
-    lista.agregar(3)
-    lista.a_lista()      → [5, 10, 3]
+    lista.agregar_al_principio(1)
+    lista.a_lista()              → [1, 5, 10]
 """
 
 
@@ -38,9 +39,20 @@ class ListaEnlazada:
         """Inicializa una lista vacía."""
         self.cabeza = None
 
-    def agregar(self, valor):
+    def a_lista(self):
         """
-        Agrega un elemento al final de la lista.
+        Convierte la lista enlazada a una lista de Python.
+
+        Returns:
+            Lista de Python con los valores en orden
+        """
+        # TODO: Implementar
+        pass
+
+    def agregar_al_principio(self, valor):
+        """
+        Agrega un elemento al principio de la lista.
+        Esta operación es O(1).
 
         Args:
             valor: El valor a agregar
@@ -48,12 +60,13 @@ class ListaEnlazada:
         # TODO: Implementar
         pass
 
-    def a_lista(self):
+    def agregar_al_final(self, valor):
         """
-        Convierte la lista enlazada a una lista de Python.
+        Agrega un elemento al final de la lista.
+        Esta operación es O(n) porque hay que recorrer toda la lista.
 
-        Returns:
-            Lista de Python con los valores en orden
+        Args:
+            valor: El valor a agregar
         """
         # TODO: Implementar
         pass
