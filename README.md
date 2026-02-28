@@ -21,8 +21,8 @@ pip install pytest
 ├── 04_pilas_y_colas/
 ├── 05_complejidad_algoritmica/
 ├── 06_generadores_iteradores/
-├── 07_list_comprehensions/
-└── 08_listas_enlazadas/
+├── 07_listas_enlazadas/
+└── 08_arboles_binarios/
 ```
 
 Cada carpeta contiene:
@@ -107,8 +107,8 @@ Las clases están numeradas pero son independientes. Podés hacerlas en cualquie
 4. **04_pilas_y_colas** - Estructuras útiles
 5. **05_complejidad_algoritmica** - Entender eficiencia
 6. **06_generadores_iteradores** - Python avanzado
-7. **07_list_comprehensions** - Python idiomático
-8. **08_listas_enlazadas** - Estructuras de datos
+7. **07_listas_enlazadas** - Estructuras de datos
+8. **08_arboles_binarios** - Estructuras jerárquicas
 
 ## Tips generales
 
