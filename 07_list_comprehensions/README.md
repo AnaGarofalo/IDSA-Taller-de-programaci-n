@@ -4,6 +4,20 @@
 
 Muchas veces necesitamos transformar o filtrar datos de una lista. En lugar de escribir varios líneas con loops, Python ofrece formas más concisas y eficientes.
 
+
+
+## Lambda: funciones pequeñas en una línea
+
+Las funciones lambda son funciones anónimas (sin nombre) para casos simples:
+
+```python
+# Función normal
+def doble(x):
+    return x * 2
+
+# Lambda equivalente
+doble = lambda x: x * 2
+```
 ---
 
 ## List Comprehensions
@@ -71,15 +85,6 @@ largas = [p for p in palabras if len(p) > 4]
 # ["estrella", "universo"]
 ```
 
-### Filtrar y transformar
-
-```python
-# Cuadrados de los números pares
-numeros = [1, 2, 3, 4, 5, 6]
-cuadrados_pares = [n ** 2 for n in numeros if n % 2 == 0]
-# [4, 16, 36]
-```
-
 ---
 
 ## Map: aplicar función a cada elemento
@@ -135,19 +140,6 @@ validos = list(filter(None, datos))
 ```
 
 ---
-
-## Lambda: funciones pequeñas en una línea
-
-Las funciones lambda son funciones anónimas (sin nombre) para casos simples:
-
-```python
-# Función normal
-def doble(x):
-    return x * 2
-
-# Lambda equivalente
-doble = lambda x: x * 2
-```
 
 ### Uso con map y filter
 
