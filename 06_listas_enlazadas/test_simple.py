@@ -6,74 +6,107 @@ def test_lista_nueva_vacia():
     assert lista.a_lista() == []
 
 
-# Tests para agregar_al_principio
+# Tests para agregar sin posición (al principio por defecto)
 
-def test_agregar_al_principio_un_elemento():
+def test_agregar_sin_posicion():
+    """agregar(valor) debe agregar al principio (posicion=0)."""
     lista = ListaEnlazada()
-    lista.agregar_al_principio(5)
+    lista.agregar(5)
     assert lista.a_lista() == [5]
 
 
-def test_agregar_al_principio_varios():
+def test_agregar_varios_sin_posicion():
+    """Varios agregar() sin posición agregan al principio."""
     lista = ListaEnlazada()
-    lista.agregar_al_principio(3)
-    lista.agregar_al_principio(2)
-    lista.agregar_al_principio(1)
+    lista.agregar(3)
+    lista.agregar(2)
+    lista.agregar(1)
     assert lista.a_lista() == [1, 2, 3]
 
 
-def test_agregar_al_principio_strings():
+# Tests para agregar con posición 0 (explícito)
+
+def test_agregar_posicion_cero():
+    """agregar(valor, 0) es igual que agregar(valor)."""
     lista = ListaEnlazada()
-    lista.agregar_al_principio("mundo")
-    lista.agregar_al_principio("hola")
-    assert lista.a_lista() == ["hola", "mundo"]
-
-
-# Tests para agregar_al_final
-
-def test_agregar_al_final_un_elemento():
-    lista = ListaEnlazada()
-    lista.agregar_al_final(5)
+    lista.agregar(5, 0)
     assert lista.a_lista() == [5]
 
 
-def test_agregar_al_final_varios():
+def test_agregar_varios_posicion_cero():
     lista = ListaEnlazada()
-    lista.agregar_al_final(1)
-    lista.agregar_al_final(2)
-    lista.agregar_al_final(3)
+    lista.agregar(3, 0)
+    lista.agregar(2, 0)
+    lista.agregar(1, 0)
     assert lista.a_lista() == [1, 2, 3]
 
 
-def test_agregar_al_final_strings():
+# Tests para agregar al final
+
+def test_agregar_al_final():
     lista = ListaEnlazada()
-    lista.agregar_al_final("hola")
-    lista.agregar_al_final("mundo")
+    lista.agregar(1, 0)
+    lista.agregar(2, 1)
+    lista.agregar(3, 2)
+    assert lista.a_lista() == [1, 2, 3]
+
+
+def test_agregar_posicion_mayor_a_tamaño():
+    """Si la posición es mayor al tamaño, agrega al final."""
+    lista = ListaEnlazada()
+    lista.agregar(1)
+    lista.agregar(2, 100)  # posición 100, pero solo hay 1 elemento
+    assert lista.a_lista() == [1, 2]
+
+
+# Tests para agregar en el medio
+
+def test_agregar_en_medio():
+    lista = ListaEnlazada()
+    lista.agregar(1, 0)
+    lista.agregar(3, 1)
+    lista.agregar(2, 1)  # Insertar entre 1 y 3
+    assert lista.a_lista() == [1, 2, 3]
+
+
+def test_agregar_en_varias_posiciones():
+    lista = ListaEnlazada()
+    lista.agregar(10, 0)   # [10]
+    lista.agregar(40, 1)   # [10, 40]
+    lista.agregar(20, 1)   # [10, 20, 40]
+    lista.agregar(30, 2)   # [10, 20, 30, 40]
+    assert lista.a_lista() == [10, 20, 30, 40]
+
+
+# Tests de sobrecarga (mismo método, diferentes formas de llamar)
+
+def test_sobrecarga_equivalencia():
+    """agregar(x) y agregar(x, 0) deben ser equivalentes."""
+    lista1 = ListaEnlazada()
+    lista2 = ListaEnlazada()
+
+    lista1.agregar(1)
+    lista1.agregar(2)
+
+    lista2.agregar(1, 0)
+    lista2.agregar(2, 0)
+
+    assert lista1.a_lista() == lista2.a_lista()
+
+
+# Tests generales
+
+def test_agregar_strings():
+    lista = ListaEnlazada()
+    lista.agregar("mundo")
+    lista.agregar("hola")
     assert lista.a_lista() == ["hola", "mundo"]
-
-
-# Tests combinados
-
-def test_combinar_principio_y_final():
-    lista = ListaEnlazada()
-    lista.agregar_al_final(2)
-    lista.agregar_al_principio(1)
-    lista.agregar_al_final(3)
-    assert lista.a_lista() == [1, 2, 3]
-
-
-def test_valores_mixtos():
-    lista = ListaEnlazada()
-    lista.agregar_al_final(1)
-    lista.agregar_al_principio("cero")
-    lista.agregar_al_final(2.0)
-    assert lista.a_lista() == ["cero", 1, 2.0]
 
 
 def test_a_lista_no_modifica():
     lista = ListaEnlazada()
-    lista.agregar_al_final(1)
-    lista.agregar_al_final(2)
+    lista.agregar(1)
+    lista.agregar(2, 1)
 
     resultado1 = lista.a_lista()
     resultado2 = lista.a_lista()
@@ -81,37 +114,25 @@ def test_a_lista_no_modifica():
     assert resultado1 == resultado2 == [1, 2]
 
 
-def test_estructura_nodos_al_final():
+def test_estructura_nodos():
     lista = ListaEnlazada()
-    lista.agregar_al_final(10)
-    lista.agregar_al_final(20)
+    lista.agregar(20, 0)
+    lista.agregar(10, 0)
 
     assert lista.cabeza is not None
     assert lista.cabeza.valor == 10
     assert lista.cabeza.siguiente is not None
     assert lista.cabeza.siguiente.valor == 20
     assert lista.cabeza.siguiente.siguiente is None
-
-
-def test_estructura_nodos_al_principio():
-    lista = ListaEnlazada()
-    lista.agregar_al_principio(20)
-    lista.agregar_al_principio(10)
-
-    assert lista.cabeza is not None
-    assert lista.cabeza.valor == 10
-    assert lista.cabeza.siguiente is not None
-    assert lista.cabeza.siguiente.valor == 20
-    assert lista.cabeza.siguiente.siguiente is None
-
-
-def test_agregar_cero():
-    lista = ListaEnlazada()
-    lista.agregar_al_final(0)
-    assert lista.a_lista() == [0]
 
 
 def test_agregar_none():
     lista = ListaEnlazada()
-    lista.agregar_al_principio(None)
+    lista.agregar(None)
     assert lista.a_lista() == [None]
+
+
+def test_agregar_cero():
+    lista = ListaEnlazada()
+    lista.agregar(0)
+    assert lista.a_lista() == [0]

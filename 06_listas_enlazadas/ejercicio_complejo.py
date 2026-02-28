@@ -7,6 +7,9 @@ el orden de los elementos.
 La inversión debe ser "in-place", es decir, modificar la lista original
 en lugar de crear una nueva.
 
+Nota: En este ejercicio, agregar() agrega al final (versión simplificada).
+      La sobrecarga pythónica se practicó en el ejercicio simple.
+
 Ejemplo:
     lista = ListaEnlazada()
     lista.agregar(1)

@@ -143,6 +143,39 @@ El último nodo apunta al primero.
 
 ---
 
+## Sobrecarga de métodos (a la Python)
+
+En lenguajes como Java, podés tener varios métodos con el mismo nombre pero diferentes parámetros (sobrecarga):
+
+```java
+// Java - sobrecarga real
+void agregar(int valor) { ... }
+void agregar(int valor, int posicion) { ... }
+```
+
+**Python no tiene sobrecarga real.** Si definís el mismo método dos veces, el segundo sobrescribe al primero. Pero podés simular sobrecarga usando **parámetros con valores por defecto**:
+
+```python
+# Python - "sobrecarga" con valores por defecto
+def agregar(self, valor, posicion=0):
+    """
+    Agrega un valor en la posición indicada.
+    Si no se especifica posición, agrega al principio.
+    """
+    ...
+```
+
+Esto permite llamar al método de dos formas:
+
+```python
+lista.agregar(5)      # Agrega al principio (posicion=0 por defecto)
+lista.agregar(5, 2)   # Agrega en la posición 2
+```
+
+Un solo método, múltiples formas de usarlo. ¡Eso es sobrecarga pythónica!
+
+---
+
 ## ¿Por qué aprenderlas?
 
 Aunque en Python casi siempre usamos listas normales, entender listas enlazadas:
@@ -156,5 +189,5 @@ Aunque en Python casi siempre usamos listas normales, entender listas enlazadas:
 
 ## Ejercicios
 
-1. **ejercicio_simple.py**: Implementar agregar y convertir a lista
-2. **ejercicio_complejo.py**: Implementar invertir la lista
+1. **ejercicio_simple.py**: Implementar `agregar(valor, posicion=0)` con sobrecarga pythónica
+2. **ejercicio_complejo.py**: Implementar `invertir()` la lista
