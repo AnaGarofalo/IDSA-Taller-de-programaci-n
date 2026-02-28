@@ -15,13 +15,13 @@ pip install pytest
 ## Estructura del curso
 
 ```
-├── 01_ordenamiento/
-├── 02_busqueda/
-├── 03_recursividad/
-├── 04_pilas_y_colas/
-├── 05_complejidad_algoritmica/
-├── 06_list_comprehensions/
-├── 07_listas_enlazadas/
+├── 01_list_comprehensions/
+├── 02_complejidad_algoritmica/
+├── 03_ordenamiento/
+├── 04_busqueda/
+├── 05_pilas_y_colas/
+├── 06_listas_enlazadas/
+├── 07_recursividad/
 └── 08_arboles_binarios/
 ```
 
@@ -101,13 +101,13 @@ pytest -v -x
 
 Las clases están numeradas pero son independientes. Podés hacerlas en cualquier orden, aunque se sugiere:
 
-1. **01_ordenamiento** - Buen punto de partida
-2. **02_busqueda** - Conceptos simples
-3. **03_recursividad** - Concepto importante
-4. **04_pilas_y_colas** - Estructuras útiles
-5. **05_complejidad_algoritmica** - Entender eficiencia
-6. **06_list_comprehensions** - Python idiomático
-7. **07_listas_enlazadas** - Estructuras de datos
+1. **01_list_comprehensions** - Herramientas de Python
+2. **02_complejidad_algoritmica** - Entender eficiencia
+3. **03_ordenamiento** - Algoritmos clásicos
+4. **04_busqueda** - Búsqueda lineal y binaria
+5. **05_pilas_y_colas** - Estructuras básicas
+6. **06_listas_enlazadas** - Estructuras enlazadas
+7. **07_recursividad** - Funciones que se llaman a sí mismas
 8. **08_arboles_binarios** - Estructuras jerárquicas
 
 ## Tips generales
