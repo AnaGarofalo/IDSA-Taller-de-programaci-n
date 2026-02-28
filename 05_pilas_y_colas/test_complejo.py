@@ -1,118 +1,142 @@
 import pytest
-from ejercicio_complejo import ColaDeAtencion
+from ejercicio_simple import Coleccion, Pila
+from ejercicio_complejo import Cola
+
+
+# Tests para Cola
+
+def test_cola_hereda_de_coleccion():
+    assert issubclass(Cola, Coleccion)
 
 
 def test_cola_nueva_esta_vacia():
-    cola = ColaDeAtencion()
+    cola = Cola()
     assert cola.esta_vacia() == True
 
 
-def test_agregar_un_cliente():
-    cola = ColaDeAtencion()
-    cola.agregar("Ana")
+def test_cola_agregar_un_elemento():
+    cola = Cola()
+    cola.agregar(1)
     assert cola.esta_vacia() == False
-    assert cola.cantidad() == 1
+    assert cola.primero() == 1
 
 
-def test_agregar_varios_clientes():
-    cola = ColaDeAtencion()
-    cola.agregar("Ana")
-    cola.agregar("Luis")
-    cola.agregar("María")
-    assert cola.cantidad() == 3
+def test_cola_agregar_varios_elementos():
+    cola = Cola()
+    cola.agregar(1)
+    cola.agregar(2)
+    cola.agregar(3)
+    assert cola.primero() == 1  # FIFO: el primero agregado
 
 
-def test_siguiente_sin_sacar():
-    cola = ColaDeAtencion()
-    cola.agregar("Ana")
-    cola.agregar("Luis")
-    assert cola.siguiente() == "Ana"
-    assert cola.cantidad() == 2  # No cambió
+def test_cola_sacar_devuelve_primero():
+    cola = Cola()
+    cola.agregar(1)
+    cola.agregar(2)
+    cola.agregar(3)
+    assert cola.sacar() == 1  # FIFO
+    assert cola.sacar() == 2
+    assert cola.sacar() == 3
 
 
-def test_atender_saca_cliente():
-    cola = ColaDeAtencion()
-    cola.agregar("Ana")
-    cola.agregar("Luis")
-    cliente = cola.atender()
-    assert cliente == "Ana"
-    assert cola.cantidad() == 1
+def test_cola_sacar_vacia_devuelve_none():
+    cola = Cola()
+    assert cola.sacar() == None
 
 
-def test_orden_fifo():
-    cola = ColaDeAtencion()
-    cola.agregar("Primero")
-    cola.agregar("Segundo")
-    cola.agregar("Tercero")
-    assert cola.atender() == "Primero"
-    assert cola.atender() == "Segundo"
-    assert cola.atender() == "Tercero"
-
-
-def test_atender_cola_vacia():
-    cola = ColaDeAtencion()
-    assert cola.atender() is None
-
-
-def test_siguiente_cola_vacia():
-    cola = ColaDeAtencion()
-    assert cola.siguiente() is None
-
-
-def test_cantidad_cola_vacia():
-    cola = ColaDeAtencion()
-    assert cola.cantidad() == 0
-
-
-def test_flujo_completo():
-    cola = ColaDeAtencion()
-
-    # Llegan clientes
-    cola.agregar("Ana")
-    cola.agregar("Luis")
-    assert cola.cantidad() == 2
-
-    # Se atiende a Ana
-    assert cola.atender() == "Ana"
-    assert cola.cantidad() == 1
-
-    # Llega otro cliente
-    cola.agregar("María")
-    assert cola.cantidad() == 2
-
-    # Se ve quién sigue
-    assert cola.siguiente() == "Luis"
-
-    # Se atienden los demás
-    assert cola.atender() == "Luis"
-    assert cola.atender() == "María"
-    assert cola.esta_vacia() == True
-
-
-def test_agregar_despues_de_vaciar():
-    cola = ColaDeAtencion()
-    cola.agregar("Ana")
-    cola.atender()
-    assert cola.esta_vacia() == True
-
-    cola.agregar("Luis")
+def test_cola_primero_no_saca():
+    cola = Cola()
+    cola.agregar(1)
+    cola.agregar(2)
+    assert cola.primero() == 1
+    assert cola.primero() == 1  # Sigue siendo 1
     assert cola.esta_vacia() == False
-    assert cola.siguiente() == "Luis"
 
 
-def test_mostrar(capsys):
-    cola = ColaDeAtencion()
-    cola.agregar("Ana")
-    cola.agregar("Luis")
-    cola.agregar("María")
-    cola.mostrar()
-    captured = capsys.readouterr()
-    # Debe mostrar los clientes
-    assert "Ana" in captured.out
-    assert "Luis" in captured.out
-    assert "María" in captured.out
+def test_cola_primero_vacia_devuelve_none():
+    cola = Cola()
+    assert cola.primero() == None
 
 
-def test_mostrar_cola_vacia(capsys):
-    cola = ColaDeAtencion()
-    cola.mostrar()  # No debe dar error
+def test_cola_iterar():
+    cola = Cola()
+    cola.agregar(1)
+    cola.agregar(2)
+    cola.agregar(3)
+
+    elementos = list(cola)
+    assert elementos == [1, 2, 3]  # Del frente hacia el final
+
+
+def test_cola_iterar_vacia():
+    cola = Cola()
+    elementos = list(cola)
+    assert elementos == []
+
+
+def test_cola_iterar_no_modifica():
+    cola = Cola()
+    cola.agregar(1)
+    cola.agregar(2)
+
+    list(cola)  # Iterar
+    assert cola.primero() == 1  # No se modificó
+    assert cola.esta_vacia() == False
+
+
+def test_cola_con_strings():
+    cola = Cola()
+    cola.agregar("a")
+    cola.agregar("b")
+    assert cola.sacar() == "a"
+    assert cola.sacar() == "b"
+
+
+# Tests de polimorfismo
+
+def test_polimorfismo_misma_interfaz():
+    """Verifica que Pila y Cola tienen la misma interfaz."""
+    pila = Pila()
+    cola = Cola()
+
+    # Ambos tienen los mismos métodos
+    for metodo in ['agregar', 'sacar', 'primero', 'esta_vacia', '__iter__']:
+        assert hasattr(pila, metodo)
+        assert hasattr(cola, metodo)
+
+
+def test_polimorfismo_mismo_codigo():
+    """El mismo código funciona con Pila o Cola."""
+
+    def cargar_y_vaciar(coleccion):
+        coleccion.agregar("A")
+        coleccion.agregar("B")
+        coleccion.agregar("C")
+
+        resultado = []
+        while not coleccion.esta_vacia():
+            resultado.append(coleccion.sacar())
+        return resultado
+
+    # Mismo código, diferente resultado
+    resultado_pila = cargar_y_vaciar(Pila())
+    resultado_cola = cargar_y_vaciar(Cola())
+
+    assert resultado_pila == ["C", "B", "A"]  # LIFO
+    assert resultado_cola == ["A", "B", "C"]  # FIFO
+
+
+def test_polimorfismo_iterar():
+    """Ambas colecciones son iterables."""
+
+    def obtener_elementos(coleccion):
+        coleccion.agregar(1)
+        coleccion.agregar(2)
+        coleccion.agregar(3)
+        return list(coleccion)
+
+    elementos_pila = obtener_elementos(Pila())
+    elementos_cola = obtener_elementos(Cola())
+
+    assert elementos_pila == [3, 2, 1]  # LIFO
+    assert elementos_cola == [1, 2, 3]  # FIFO

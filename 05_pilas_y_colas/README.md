@@ -1,124 +1,175 @@
-# Pilas y Colas
+# Pilas y Colas - Herencia y Polimorfismo
 
-## ¿Para qué sirven?
+## Programación Orientada a Objetos (POO)
 
-Son formas de organizar datos donde importa el orden en que entran y salen los elementos. Las usamos todo el tiempo sin darnos cuenta:
+Antes de ver pilas y colas, necesitamos entender algunos conceptos de POO.
 
-- **Pila**: Como una pila de platos. El último que ponés es el primero que sacás.
-- **Cola**: Como la cola del supermercado. El primero que llega es el primero en ser atendido.
+### Herencia
 
----
-
-## Pilas (Stack) - LIFO
-
-**LIFO** = Last In, First Out (Último en entrar, primero en salir)
-
-### Analogía del mundo real
-
-Pensá en una pila de libros sobre una mesa. Solo podés:
-- Agregar un libro arriba de todo
-- Sacar el libro de arriba
-
-No podés sacar el de abajo sin sacar los de arriba primero.
-
-### Operaciones básicas
-
-- **push**: Agregar un elemento arriba de la pila
-- **pop**: Sacar el elemento de arriba
-- **peek/top**: Ver el elemento de arriba (sin sacarlo)
-
-### Ejemplo visual
-
-```
-Operación          Pila (el de arriba es el último)
----------          ----
-inicial            []
-push(1)            [1]
-push(2)            [1, 2]
-push(3)            [1, 2, 3]
-pop() → 3          [1, 2]
-pop() → 2          [1]
-push(4)            [1, 4]
-```
-
-### Implementación simple en Python
+La herencia permite crear una clase nueva basada en otra existente. La clase "hija" hereda los métodos y atributos de la clase "padre".
 
 ```python
-pila = []
-pila.append(1)      # push
-pila.append(2)
-elemento = pila.pop()  # saca el 2
+class Animal:
+    def __init__(self, nombre):
+        self.nombre = nombre
+
+    def hablar(self):
+        return "..."  # Comportamiento por defecto
+
+class Perro(Animal):  # Perro hereda de Animal
+    def hablar(self):  # Sobrescribe el método
+        return "Guau!"
+
+class Gato(Animal):   # Gato hereda de Animal
+    def hablar(self):  # Sobrescribe el método
+        return "Miau!"
+
+class Pez(Animal):    # Pez hereda de Animal
+    pass              # No sobrescribe hablar(), usa el de Animal
 ```
 
-### ¿Cuándo usar pilas?
+```python
+# Podemos instanciar cualquiera de las clases
+animal = Animal("Genérico")
+perro = Perro("Firulais")
+gato = Gato("Michi")
+pez = Pez("Nemo")
 
-- Deshacer/rehacer en editores de texto
-- El botón "atrás" del navegador
-- Verificar paréntesis balanceados
-- Evaluar expresiones matemáticas
+print(animal.hablar())  # "..."   (usa el método de Animal)
+print(perro.hablar())   # "Guau!" (usa su propio método)
+print(gato.hablar())    # "Miau!" (usa su propio método)
+print(pez.hablar())     # "..."   (hereda el método de Animal)
+```
+
+### Polimorfismo
+
+Polimorfismo significa "muchas formas". Es cuando diferentes clases tienen el mismo método, pero cada una lo implementa de forma diferente.
+
+```python
+animales = [Animal("X"), Perro("Firulais"), Gato("Michi"), Pez("Nemo")]
+
+for animal in animales:
+    print(animal.hablar())  # Mismo método, diferente resultado
+# Imprime:
+# ...
+# Guau!
+# Miau!
+# ...
+```
+
+El código que usa estos objetos no necesita saber qué tipo de animal es. Solo sabe que puede llamar a `hablar()` y cada uno responderá a su manera.
+
+### Clase abstracta (ABC)
+
+Una clase abstracta define la "interfaz" que deben seguir las clases hijas. Es como un contrato: "todas las clases que hereden de mí deben tener estos métodos".
+
+```python
+from abc import ABC, abstractmethod
+
+class Coleccion(ABC):
+    """Clase base abstracta para colecciones."""
+
+    @abstractmethod
+    def agregar(self, elemento):
+        pass
+
+    @abstractmethod
+    def sacar(self):
+        pass
+```
+
+- `ABC` = Abstract Base Class (clase base abstracta)
+- `@abstractmethod` = indica que las subclases **deben** implementar este método
+
+Si intentás instanciar `Coleccion()` directamente, Python lanza un error. Y si una subclase no implementa todos los métodos abstractos, también da error.
 
 ---
 
-## Colas (Queue) - FIFO
+## Pilas y Colas
 
-**FIFO** = First In, First Out (Primero en entrar, primero en salir)
+Ahora veamos dos estructuras de datos que comparten una interfaz común pero se comportan diferente.
 
-### Analogía del mundo real
+### ¿Qué tienen en común?
 
-Una cola en el banco: el primero que llegó es el primero en ser atendido. No podés saltearte la fila.
+Ambas son colecciones donde:
+- Podés **agregar** elementos
+- Podés **sacar** elementos
+- Podés **ver el primero** sin sacarlo
+- Podés verificar si **está vacía**
+- Podés **recorrer** los elementos
 
-### Operaciones básicas
+### ¿En qué se diferencian?
 
-- **enqueue** (encolar): Agregar un elemento al final
-- **dequeue** (desencolar): Sacar el elemento del frente
-- **front**: Ver el elemento del frente (sin sacarlo)
+| Estructura | Orden | Analogía |
+|------------|-------|----------|
+| **Pila** (Stack) | LIFO - Last In, First Out | Pila de platos |
+| **Cola** (Queue) | FIFO - First In, First Out | Fila del banco |
 
-### Ejemplo visual
+### Pila (LIFO)
+
+El último en entrar es el primero en salir.
+
+```
+Operación          Pila [base ... tope]
+---------          ----
+inicial            []
+agregar(1)         [1]
+agregar(2)         [1, 2]
+agregar(3)         [1, 2, 3]
+sacar() → 3        [1, 2]      ← sale el último
+sacar() → 2        [1]
+```
+
+**Usos reales:**
+- Ctrl+Z (deshacer)
+- Botón "atrás" del navegador
+- Llamadas a funciones en un programa
+
+### Cola (FIFO)
+
+El primero en entrar es el primero en salir.
 
 ```
 Operación          Cola [frente ... final]
 ---------          ----
 inicial            []
-enqueue(1)         [1]
-enqueue(2)         [1, 2]
-enqueue(3)         [1, 2, 3]
-dequeue() → 1      [2, 3]
-dequeue() → 2      [3]
-enqueue(4)         [3, 4]
+agregar(1)         [1]
+agregar(2)         [1, 2]
+agregar(3)         [1, 2, 3]
+sacar() → 1        [2, 3]      ← sale el primero
+sacar() → 2        [3]
 ```
 
-### Implementación simple en Python
-
-```python
-from collections import deque
-
-cola = deque()
-cola.append(1)      # enqueue (agregar al final)
-cola.append(2)
-elemento = cola.popleft()  # dequeue (sacar del frente) → 1
-```
-
-### ¿Cuándo usar colas?
-
+**Usos reales:**
 - Sistema de turnos
-- Procesar tareas en orden de llegada
 - Cola de impresión
-- Mensajes pendientes de enviar
+- Mensajes pendientes
 
 ---
 
-## Comparación rápida
+## Polimorfismo en acción
 
-| Característica | Pila (Stack) | Cola (Queue) |
-|----------------|--------------|--------------|
-| Orden          | LIFO         | FIFO         |
-| Agregar        | Por arriba   | Por el final |
-| Sacar          | Por arriba   | Por el frente|
-| Analogía       | Pila de platos | Fila de personas |
+Una vez implementadas, podés usar Pila y Cola de forma intercambiable:
+
+```python
+def procesar(coleccion):
+    """Funciona con cualquier Coleccion (Pila o Cola)."""
+    coleccion.agregar("A")
+    coleccion.agregar("B")
+    coleccion.agregar("C")
+
+    while not coleccion.esta_vacia():
+        print(coleccion.sacar())
+
+procesar(Pila())   # Imprime: C, B, A (LIFO)
+procesar(Cola())   # Imprime: A, B, C (FIFO)
+```
+
+El mismo código produce resultados diferentes según el tipo de colección. ¡Eso es polimorfismo!
 
 ---
 
 ## Ejercicios
 
-1. **ejercicio_simple.py**: Implementar una Pila
-2. **ejercicio_complejo.py**: Implementar una Cola de atención
+1. **ejercicio_simple.py**: Implementar la clase base `Coleccion` y la clase `Pila`
+2. **ejercicio_complejo.py**: Implementar la clase `Cola` usando la misma interfaz

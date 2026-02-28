@@ -1,52 +1,98 @@
 """
-EJERCICIO: Pila
+EJERCICIO: Clase base Coleccion y Pila
 
-Implementá la clase Pila que simule una pila (stack) con comportamiento LIFO
-(Last In, First Out - el último en entrar es el primero en salir).
+Parte 1: Implementá la clase base Coleccion con los métodos:
+- agregar(elemento): Lanza NotImplementedError
+- sacar(): Lanza NotImplementedError
+- primero(): Lanza NotImplementedError
+- esta_vacia(): Lanza NotImplementedError
+- __iter__(): Lanza NotImplementedError
 
-La clase debe tener estos métodos:
-- apilar(elemento): Agrega un elemento arriba de la pila
-- desapilar(): Saca y devuelve el elemento de arriba de la pila
-- tope(): Devuelve el elemento de arriba SIN sacarlo
+Parte 2: Implementá la clase Pila que hereda de Coleccion:
+- agregar(elemento): Agrega un elemento al tope de la pila
+- sacar(): Saca y devuelve el elemento del tope (o None si está vacía)
+- primero(): Devuelve el elemento del tope SIN sacarlo (o None si está vacía)
 - esta_vacia(): Devuelve True si la pila está vacía
-- mostrar(): Imprime todos los elementos de la pila
+- __iter__(): Permite recorrer la pila del tope hacia la base
+
+Recordá: La pila es LIFO (Last In, First Out)
 
 Ejemplo:
     pila = Pila()
 
-    pila.apilar(1)
-    pila.apilar(2)
-    pila.apilar(3)
+    pila.agregar(1)
+    pila.agregar(2)
+    pila.agregar(3)
 
-    pila.tope()       → 3       (no lo saca)
-    pila.desapilar()  → 3       (lo saca)
-    pila.desapilar()  → 2
-    pila.tope()       → 1
+    pila.primero()    → 3       (no lo saca)
+    pila.sacar()      → 3       (lo saca)
+    pila.sacar()      → 2
+    pila.primero()    → 1
     pila.esta_vacia() → False
-    pila.desapilar()  → 1
+    pila.sacar()      → 1
     pila.esta_vacia() → True
-    pila.desapilar()  → None    (pila vacía)
-    pila.tope()       → None    (pila vacía)
+    pila.sacar()      → None    (pila vacía)
 
-    pila.apilar(1)
-    pila.apilar(2)
-    pila.mostrar()
+    pila.agregar(1)
+    pila.agregar(2)
+    for elemento in pila:
+        print(elemento)
     # Imprime:
     # 2
     # 1
 """
 
+from abc import ABC, abstractmethod
 
-class Pila:
-    """Estructura de datos LIFO (Last In, First Out)."""
+
+class Coleccion(ABC):
+    """
+    Clase base abstracta para colecciones de elementos.
+    Define la interfaz que deben implementar Pila y Cola.
+
+    ABC = Abstract Base Class
+    @abstractmethod = indica que las subclases DEBEN implementar este método
+    """
+
+    @abstractmethod
+    def agregar(self, elemento):
+        """Agrega un elemento a la colección."""
+        pass
+
+    @abstractmethod
+    def sacar(self):
+        """Saca y devuelve un elemento de la colección."""
+        pass
+
+    @abstractmethod
+    def primero(self):
+        """Devuelve el próximo elemento a salir SIN sacarlo."""
+        pass
+
+    @abstractmethod
+    def esta_vacia(self):
+        """Verifica si la colección está vacía."""
+        pass
+
+    @abstractmethod
+    def __iter__(self):
+        """Permite recorrer la colección con un for."""
+        pass
+
+
+class Pila(Coleccion):
+    """
+    Pila (Stack) - Estructura LIFO (Last In, First Out).
+    El último elemento en entrar es el primero en salir.
+    """
 
     def __init__(self):
         """Inicializa una pila vacía."""
         self.elementos = []
 
-    def apilar(self, elemento):
+    def agregar(self, elemento):
         """
-        Agrega un elemento arriba de la pila.
+        Agrega un elemento al tope de la pila.
 
         Args:
             elemento: El elemento a agregar
@@ -54,22 +100,22 @@ class Pila:
         # TODO: Implementar
         pass
 
-    def desapilar(self):
+    def sacar(self):
         """
-        Saca y devuelve el elemento de arriba de la pila.
+        Saca y devuelve el elemento del tope de la pila.
 
         Returns:
-            El elemento de arriba, o None si la pila está vacía
+            El elemento del tope, o None si la pila está vacía
         """
         # TODO: Implementar
         pass
 
-    def tope(self):
+    def primero(self):
         """
-        Devuelve el elemento de arriba SIN sacarlo.
+        Devuelve el elemento del tope SIN sacarlo.
 
         Returns:
-            El elemento de arriba, o None si la pila está vacía
+            El elemento del tope, o None si la pila está vacía
         """
         # TODO: Implementar
         pass
@@ -84,12 +130,12 @@ class Pila:
         # TODO: Implementar
         pass
 
-    def mostrar(self):
+    def __iter__(self):
         """
-        Imprime todos los elementos de la pila, del tope hacia abajo.
+        Permite recorrer la pila del tope hacia la base.
 
-        IMPORTANTE: No lo resuelvas con un for que recorra la lista,
-        usá los métodos que implementaste arriba.
+        Yields:
+            Los elementos de la pila en orden LIFO
         """
-        # TODO: Implementar
+        # TODO: Implementar (usá yield)
         pass

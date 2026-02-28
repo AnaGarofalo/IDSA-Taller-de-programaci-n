@@ -1,5 +1,25 @@
 import pytest
-from ejercicio_simple import Pila
+from abc import ABC
+from ejercicio_simple import Coleccion, Pila
+
+
+# Tests para la clase base Coleccion
+
+def test_coleccion_es_abstracta():
+    """No se puede instanciar Coleccion directamente."""
+    with pytest.raises(TypeError):
+        Coleccion()
+
+
+def test_coleccion_hereda_de_abc():
+    """Coleccion debe heredar de ABC."""
+    assert issubclass(Coleccion, ABC)
+
+
+# Tests para Pila
+
+def test_pila_hereda_de_coleccion():
+    assert issubclass(Pila, Coleccion)
 
 
 def test_pila_nueva_esta_vacia():
@@ -7,98 +27,88 @@ def test_pila_nueva_esta_vacia():
     assert pila.esta_vacia() == True
 
 
-def test_apilar_un_elemento():
+def test_pila_agregar_un_elemento():
     pila = Pila()
-    pila.apilar(5)
+    pila.agregar(1)
+    assert pila.esta_vacia() == False
+    assert pila.primero() == 1
+
+
+def test_pila_agregar_varios_elementos():
+    pila = Pila()
+    pila.agregar(1)
+    pila.agregar(2)
+    pila.agregar(3)
+    assert pila.primero() == 3  # LIFO: el último agregado
+
+
+def test_pila_sacar_devuelve_ultimo():
+    pila = Pila()
+    pila.agregar(1)
+    pila.agregar(2)
+    pila.agregar(3)
+    assert pila.sacar() == 3  # LIFO
+    assert pila.sacar() == 2
+    assert pila.sacar() == 1
+
+
+def test_pila_sacar_vacia_devuelve_none():
+    pila = Pila()
+    assert pila.sacar() == None
+
+
+def test_pila_primero_no_saca():
+    pila = Pila()
+    pila.agregar(1)
+    pila.agregar(2)
+    assert pila.primero() == 2
+    assert pila.primero() == 2  # Sigue siendo 2
     assert pila.esta_vacia() == False
 
 
-def test_apilar_varios_elementos():
+def test_pila_primero_vacia_devuelve_none():
     pila = Pila()
-    pila.apilar(1)
-    pila.apilar(2)
-    pila.apilar(3)
-    assert pila.tope() == 3
+    assert pila.primero() == None
 
 
-def test_desapilar_devuelve_ultimo():
+def test_pila_iterar():
     pila = Pila()
-    pila.apilar(1)
-    pila.apilar(2)
-    pila.apilar(3)
-    assert pila.desapilar() == 3
+    pila.agregar(1)
+    pila.agregar(2)
+    pila.agregar(3)
+
+    elementos = list(pila)
+    assert elementos == [3, 2, 1]  # Del tope hacia la base
 
 
-def test_orden_lifo():
+def test_pila_iterar_vacia():
     pila = Pila()
-    pila.apilar("primero")
-    pila.apilar("segundo")
-    pila.apilar("tercero")
-    assert pila.desapilar() == "tercero"
-    assert pila.desapilar() == "segundo"
-    assert pila.desapilar() == "primero"
+    elementos = list(pila)
+    assert elementos == []
 
 
-def test_tope_no_saca_elemento():
+def test_pila_iterar_no_modifica():
     pila = Pila()
-    pila.apilar(42)
-    assert pila.tope() == 42
-    assert pila.tope() == 42
+    pila.agregar(1)
+    pila.agregar(2)
+
+    list(pila)  # Iterar
+    assert pila.primero() == 2  # No se modificó
     assert pila.esta_vacia() == False
 
 
-def test_desapilar_pila_vacia():
+def test_pila_con_strings():
     pila = Pila()
-    assert pila.desapilar() is None
+    pila.agregar("a")
+    pila.agregar("b")
+    assert pila.sacar() == "b"
+    assert pila.sacar() == "a"
 
 
-def test_tope_pila_vacia():
+def test_pila_con_none():
     pila = Pila()
-    assert pila.tope() is None
-
-
-def test_flujo_completo():
-    pila = Pila()
-
-    pila.apilar(1)
-    pila.apilar(2)
-    assert pila.tope() == 2
-
-    assert pila.desapilar() == 2
-    assert pila.tope() == 1
-
-    pila.apilar(3)
-    assert pila.tope() == 3
-
-    assert pila.desapilar() == 3
-    assert pila.desapilar() == 1
+    pila.agregar(None)
+    assert pila.esta_vacia() == False
+    assert pila.primero() == None
+    assert pila.sacar() == None
     assert pila.esta_vacia() == True
-
-
-def test_apilar_despues_de_vaciar():
-    pila = Pila()
-    pila.apilar(1)
-    pila.desapilar()
-    assert pila.esta_vacia() == True
-
-    pila.apilar(2)
-    assert pila.esta_vacia() == False
-    assert pila.tope() == 2
-
-
-def test_mostrar(capsys):
-    pila = Pila()
-    pila.apilar(1)
-    pila.apilar(2)
-    pila.apilar(3)
-    pila.mostrar()
-    captured = capsys.readouterr()
-    # Debe mostrar del tope hacia abajo
-    assert "3" in captured.out
-    assert "2" in captured.out
-    assert "1" in captured.out
-
-
-def test_mostrar_pila_vacia(capsys):
-    pila = Pila()
-    pila.mostrar()  # No debe dar error

@@ -1,89 +1,92 @@
 """
-EJERCICIO: Cola de atención
+EJERCICIO: Cola usando la misma interfaz
 
-Implementá la clase ColaDeAtencion que simule un sistema de turnos.
+Implementá la clase Cola que hereda de Coleccion (importada del ejercicio simple).
+Debe implementar la misma interfaz que Pila, pero con comportamiento FIFO.
 
-La clase debe tener estos métodos:
-- agregar(cliente): Agrega un cliente al final de la cola
-- atender(): Atiende (y saca) al primer cliente de la cola, retorna su nombre
-- siguiente(): Retorna el nombre del próximo cliente SIN sacarlo de la cola
-- cantidad(): Retorna cuántos clientes hay esperando
-- esta_vacia(): Retorna True si no hay clientes esperando
-- mostrar(): Imprime todos los clientes en la cola
+Métodos a implementar:
+- agregar(elemento): Agrega un elemento al final de la cola
+- sacar(): Saca y devuelve el elemento del frente (o None si está vacía)
+- primero(): Devuelve el elemento del frente SIN sacarlo (o None si está vacía)
+- esta_vacia(): Devuelve True si la cola está vacía
+- __iter__(): Permite recorrer la cola del frente hacia el final
+
+Recordá: La cola es FIFO (First In, First Out)
 
 Ejemplo:
-    cola = ColaDeAtencion()
+    cola = Cola()
 
-    cola.agregar("Ana")
-    cola.agregar("Luis")
-    cola.agregar("María")
+    cola.agregar(1)
+    cola.agregar(2)
+    cola.agregar(3)
 
-    cola.cantidad()    → 3
-    cola.siguiente()   → "Ana"    (no la saca)
-    cola.cantidad()    → 3        (sigue siendo 3)
+    cola.primero()    → 1       (no lo saca)
+    cola.sacar()      → 1       (lo saca)
+    cola.sacar()      → 2
+    cola.primero()    → 3
+    cola.esta_vacia() → False
+    cola.sacar()      → 3
+    cola.esta_vacia() → True
+    cola.sacar()      → None    (cola vacía)
 
-    cola.atender()     → "Ana"    (la saca)
-    cola.cantidad()    → 2
-    cola.siguiente()   → "Luis"
-
-    cola.atender()     → "Luis"
-    cola.atender()     → "María"
-    cola.esta_vacia()  → True
-    cola.atender()     → None     (no hay nadie)
-    cola.siguiente()   → None     (no hay nadie)
-
-    cola.agregar("Ana")
-    cola.agregar("Luis")
-    cola.mostrar()
+    cola.agregar(1)
+    cola.agregar(2)
+    for elemento in cola:
+        print(elemento)
     # Imprime:
-    # Ana
-    # Luis
+    # 1
+    # 2
+
+POLIMORFISMO:
+Una vez implementada, podés usar Pila y Cola de forma intercambiable:
+
+    def vaciar(coleccion):
+        while not coleccion.esta_vacia():
+            print(coleccion.sacar())
+
+    vaciar(Pila())  # Funciona
+    vaciar(Cola())  # También funciona!
 """
 
+from ejercicio_simple import Coleccion
 
-class ColaDeAtencion:
-    """Sistema de cola de atención por turnos."""
+
+class Cola(Coleccion):
+    """
+    Cola (Queue) - Estructura FIFO (First In, First Out).
+    El primer elemento en entrar es el primero en salir.
+    """
 
     def __init__(self):
         """Inicializa una cola vacía."""
-        self.clientes = []
+        self.elementos = []
 
-    def agregar(self, cliente):
+    def agregar(self, elemento):
         """
-        Agrega un cliente al final de la cola.
+        Agrega un elemento al final de la cola.
 
         Args:
-            cliente: Nombre del cliente a agregar
+            elemento: El elemento a agregar
         """
         # TODO: Implementar
         pass
 
-    def atender(self):
+    def sacar(self):
         """
-        Atiende al primer cliente de la cola (lo saca).
+        Saca y devuelve el elemento del frente de la cola.
 
         Returns:
-            El nombre del cliente atendido, o None si la cola está vacía
+            El elemento del frente, o None si la cola está vacía
         """
         # TODO: Implementar
         pass
 
-    def siguiente(self):
+    def primero(self):
         """
-        Muestra quién es el próximo cliente SIN sacarlo de la cola.
+        Devuelve el elemento del frente SIN sacarlo.
 
         Returns:
-            El nombre del próximo cliente, o None si la cola está vacía
-        """
-        # TODO: Implementar
-        pass
-
-    def cantidad(self):
-        """
-        Retorna la cantidad de clientes esperando.
-
-        Returns:
-            Número de clientes en la cola
+            El elemento del frente, o None si la cola está vacía
         """
         # TODO: Implementar
         pass
@@ -93,17 +96,17 @@ class ColaDeAtencion:
         Verifica si la cola está vacía.
 
         Returns:
-            True si no hay clientes, False si hay al menos uno
+            True si no hay elementos, False si hay al menos uno
         """
         # TODO: Implementar
         pass
 
-    def mostrar(self):
+    def __iter__(self):
         """
-        Imprime todos los clientes en la cola, del primero al último.
+        Permite recorrer la cola del frente hacia el final.
 
-        IMPORTANTE: No lo resuelvas con un for que recorra la lista,
-        usá los métodos que implementaste arriba.
+        Yields:
+            Los elementos de la cola en orden FIFO
         """
-        # TODO: Implementar
+        # TODO: Implementar (usá yield)
         pass

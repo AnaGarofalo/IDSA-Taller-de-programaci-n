@@ -105,7 +105,7 @@ Las clases están numeradas pero son independientes. Podés hacerlas en cualquie
 2. **02_complejidad_algoritmica** - Entender eficiencia
 3. **03_ordenamiento** - Algoritmos clásicos
 4. **04_busqueda** - Búsqueda lineal y binaria
-5. **05_pilas_y_colas** - Estructuras básicas
+5. **05_pilas_y_colas** - Estructuras básicas + herencia y polimorfismo
 6. **06_listas_enlazadas** - Estructuras enlazadas
 7. **07_recursividad** - Funciones que se llaman a sí mismas
 8. **08_arboles_binarios** - Estructuras jerárquicas

@@ -1,78 +1,91 @@
 # Tips para los ejercicios
 
-## Ejercicio simple (Pila)
+## Ejercicio simple (Coleccion y Pila)
 
-### Métodos básicos
+### Clase abstracta Coleccion
 
-Podés usar una lista interna para guardar los elementos. Pensá qué métodos de lista te sirven:
-- `append()` agrega al final
-- `pop()` saca del final y lo devuelve
-- Acceder al último elemento: `lista[-1]`
+Usá `ABC` y `@abstractmethod` del módulo `abc`:
 
-Para `tope()` y `desapilar()`, acordate de verificar primero si la pila está vacía.
+```python
+from abc import ABC, abstractmethod
 
-### El método mostrar()
+class Coleccion(ABC):
+    @abstractmethod
+    def agregar(self, elemento):
+        pass
+```
 
-Este es el más difícil porque **no podés recorrer la lista directamente** con un for.
+Con `@abstractmethod`, Python no deja instanciar la clase directamente ni crear subclases que no implementen todos los métodos.
 
-Pensalo así: ¿cómo mostrarías todos los elementos si solo podés usar `desapilar()`, `apilar()`, `tope()` y `esta_vacia()`?
+### Clase Pila
 
-<details>
-<summary>Pista 1</summary>
+Usá una lista interna para guardar los elementos. Recordá que es LIFO (el último en entrar es el primero en salir).
 
-Vas a necesitar una estructura auxiliar para no perder los elementos.
+Métodos útiles de lista:
+- `append(x)` → agrega al final
+- `pop()` → saca del final y lo devuelve
+- `lista[-1]` → accede al último elemento
 
-</details>
+Para `sacar()` y `primero()`, verificá primero si está vacía para devolver `None`.
 
-<details>
-<summary>Pista 2</summary>
+### El método `__iter__`
 
-Usá una **pila auxiliar**. Desapilá de la original, mostrá el elemento, y apilalo en la auxiliar.
+Este método permite usar `for elemento in pila:`. Usá `yield` para devolver elementos uno por uno.
 
-</details>
+Para una pila, querés recorrer del tope (último) hacia la base (primero):
 
-<details>
-<summary>Pista 3</summary>
-
-Después de mostrar todo, tenés que restaurar la pila original. Pensá: si desapilaste todo a una auxiliar, ¿en qué orden quedaron? ¿Cómo los devolvés?
-
-</details>
+```python
+def __iter__(self):
+    for i in range(len(self.elementos) - 1, -1, -1):
+        yield self.elementos[i]
+```
 
 ---
 
-## Ejercicio complejo (ColaDeAtencion)
+## Ejercicio complejo (Cola)
 
-### Métodos básicos
+### Heredar de Coleccion
 
-Usá una lista interna para guardar los clientes. Recordá que es una COLA (FIFO): el primero que llega es el primero en irse.
+Acordate de importar Coleccion del ejercicio simple:
 
-- `append()` agrega al final (llega un cliente nuevo)
-- `pop(0)` saca del principio (se atiende al primero)
-- Acceder al primero: `lista[0]`
+```python
+from ejercicio_simple import Coleccion
 
-Para `atender()` y `siguiente()`, verificá primero si la cola está vacía.
+class Cola(Coleccion):
+    ...
+```
 
-### El método mostrar()
+### Diferencia con Pila
 
-Igual que en la Pila, **no podés recorrer la lista directamente**.
+La Cola es FIFO: el primero en entrar es el primero en salir.
 
-<details>
-<summary>Pista 1</summary>
+- `append(x)` → agrega al final (igual que pila)
+- `pop(0)` → saca del **principio** (diferente a pila)
+- `lista[0]` → accede al **primer** elemento
 
-Usá una **cola auxiliar**. Atendé de la original, mostrá el cliente, y agregalo a la auxiliar.
+### El método `__iter__`
 
-</details>
+Para una cola, recorrés del frente hacia el final (orden normal):
 
-<details>
-<summary>Pista 2</summary>
+```python
+def __iter__(self):
+    for elemento in self.elementos:
+        yield elemento
+```
 
-A diferencia de la pila, en la cola el orden se mantiene. Cuando pasás todos los clientes de la original a la auxiliar, quedan en el mismo orden.
+---
 
-</details>
+## Sobre polimorfismo
 
-<details>
-<summary>Pista 3</summary>
+Una vez que tengas las dos clases, probá este código:
 
-Para restaurar, simplemente pasá todos los clientes de la auxiliar de vuelta a la original.
+```python
+def vaciar(coleccion):
+    while not coleccion.esta_vacia():
+        print(coleccion.sacar())
 
-</details>
+vaciar(Pila())   # Funciona
+vaciar(Cola())   # También funciona!
+```
+
+El mismo código funciona con ambas clases porque comparten la misma interfaz (los mismos métodos). ¡Eso es polimorfismo!

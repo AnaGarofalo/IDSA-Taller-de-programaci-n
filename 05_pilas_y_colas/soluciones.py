@@ -2,21 +2,50 @@
 SOLUCIONES - No mirar hasta haber intentado resolver los ejercicios
 """
 
+from abc import ABC, abstractmethod
 
-# Ejercicio simple: Pila
-class Pila:
+
+# Ejercicio simple: Clase base Coleccion y Pila
+
+class Coleccion(ABC):
+    """Clase base abstracta para colecciones de elementos."""
+
+    @abstractmethod
+    def agregar(self, elemento):
+        pass
+
+    @abstractmethod
+    def sacar(self):
+        pass
+
+    @abstractmethod
+    def primero(self):
+        pass
+
+    @abstractmethod
+    def esta_vacia(self):
+        pass
+
+    @abstractmethod
+    def __iter__(self):
+        pass
+
+
+class Pila(Coleccion):
+    """Pila (Stack) - Estructura LIFO."""
+
     def __init__(self):
         self.elementos = []
 
-    def apilar(self, elemento):
+    def agregar(self, elemento):
         self.elementos.append(elemento)
 
-    def desapilar(self):
+    def sacar(self):
         if self.esta_vacia():
             return None
         return self.elementos.pop()
 
-    def tope(self):
+    def primero(self):
         if self.esta_vacia():
             return None
         return self.elementos[-1]
@@ -24,59 +53,64 @@ class Pila:
     def esta_vacia(self):
         return len(self.elementos) == 0
 
-    def mostrar(self):
-        if self.esta_vacia():
-            print("(pila vacía)")
-            return
-
-        # Sacar todos los elementos guardándolos en una pila auxiliar
-        auxiliar = Pila()
-        while not self.esta_vacia():
-            elemento = self.desapilar()
-            print(elemento)
-            auxiliar.apilar(elemento)
-
-        # Restaurar la pila original
-        while not auxiliar.esta_vacia():
-            self.apilar(auxiliar.desapilar())
+    def __iter__(self):
+        # Recorrer del tope (último) hacia la base (primero)
+        for i in range(len(self.elementos) - 1, -1, -1):
+            yield self.elementos[i]
 
 
-# Ejercicio complejo: Cola de atención
-class ColaDeAtencion:
+# Ejercicio complejo: Cola
+
+class Cola(Coleccion):
+    """Cola (Queue) - Estructura FIFO."""
+
     def __init__(self):
-        self.clientes = []
+        self.elementos = []
 
-    def agregar(self, cliente):
-        self.clientes.append(cliente)
+    def agregar(self, elemento):
+        self.elementos.append(elemento)
 
-    def atender(self):
+    def sacar(self):
         if self.esta_vacia():
             return None
-        return self.clientes.pop(0)
+        return self.elementos.pop(0)
 
-    def siguiente(self):
+    def primero(self):
         if self.esta_vacia():
             return None
-        return self.clientes[0]
-
-    def cantidad(self):
-        return len(self.clientes)
+        return self.elementos[0]
 
     def esta_vacia(self):
-        return len(self.clientes) == 0
+        return len(self.elementos) == 0
 
-    def mostrar(self):
-        if self.esta_vacia():
-            print("(cola vacía)")
-            return
+    def __iter__(self):
+        # Recorrer del frente (primero) hacia el final (último)
+        for elemento in self.elementos:
+            yield elemento
 
-        # Sacar todos los clientes guardándolos en una cola auxiliar
-        auxiliar = ColaDeAtencion()
-        while not self.esta_vacia():
-            cliente = self.atender()
-            print(cliente)
-            auxiliar.agregar(cliente)
 
-        # Restaurar la cola original
-        while not auxiliar.esta_vacia():
-            self.agregar(auxiliar.atender())
+# Ejemplo de polimorfismo
+
+def demo_polimorfismo():
+    """Demuestra cómo el mismo código funciona con Pila y Cola."""
+
+    def procesar(coleccion):
+        coleccion.agregar("A")
+        coleccion.agregar("B")
+        coleccion.agregar("C")
+
+        print("Elementos:", list(coleccion))
+
+        print("Sacando:")
+        while not coleccion.esta_vacia():
+            print(f"  {coleccion.sacar()}")
+
+    print("=== PILA (LIFO) ===")
+    procesar(Pila())
+
+    print("\n=== COLA (FIFO) ===")
+    procesar(Cola())
+
+
+if __name__ == "__main__":
+    demo_polimorfismo()
