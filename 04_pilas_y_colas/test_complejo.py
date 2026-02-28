@@ -98,3 +98,21 @@ def test_agregar_despues_de_vaciar():
     cola.agregar("Luis")
     assert cola.esta_vacia() == False
     assert cola.siguiente() == "Luis"
+
+
+def test_mostrar(capsys):
+    cola = ColaDeAtencion()
+    cola.agregar("Ana")
+    cola.agregar("Luis")
+    cola.agregar("María")
+    cola.mostrar()
+    captured = capsys.readouterr()
+    # Debe mostrar los clientes
+    assert "Ana" in captured.out
+    assert "Luis" in captured.out
+    assert "María" in captured.out
+
+
+def test_mostrar_cola_vacia(capsys):
+    cola = ColaDeAtencion()
+    cola.mostrar()  # No debe dar error

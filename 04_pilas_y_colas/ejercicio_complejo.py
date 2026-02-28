@@ -9,6 +9,7 @@ La clase debe tener estos métodos:
 - siguiente(): Retorna el nombre del próximo cliente SIN sacarlo de la cola
 - cantidad(): Retorna cuántos clientes hay esperando
 - esta_vacia(): Retorna True si no hay clientes esperando
+- mostrar(): Imprime todos los clientes en la cola
 
 Ejemplo:
     cola = ColaDeAtencion()
@@ -30,6 +31,13 @@ Ejemplo:
     cola.esta_vacia()  → True
     cola.atender()     → None     (no hay nadie)
     cola.siguiente()   → None     (no hay nadie)
+
+    cola.agregar("Ana")
+    cola.agregar("Luis")
+    cola.mostrar()
+    # Imprime:
+    # Ana
+    # Luis
 """
 
 
@@ -38,8 +46,7 @@ class ColaDeAtencion:
 
     def __init__(self):
         """Inicializa una cola vacía."""
-        # TODO: Inicializar la estructura para guardar clientes
-        pass
+        self.clientes = []
 
     def agregar(self, cliente):
         """
@@ -87,6 +94,16 @@ class ColaDeAtencion:
 
         Returns:
             True si no hay clientes, False si hay al menos uno
+        """
+        # TODO: Implementar
+        pass
+
+    def mostrar(self):
+        """
+        Imprime todos los clientes en la cola, del primero al último.
+
+        IMPORTANTE: No lo resuelvas con un for que recorra la lista,
+        usá los métodos que implementaste arriba.
         """
         # TODO: Implementar
         pass

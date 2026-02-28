@@ -120,5 +120,5 @@ elemento = cola.popleft()  # dequeue (sacar del frente) → 1
 
 ## Ejercicios
 
-1. **ejercicio_simple.py**: Verificar paréntesis balanceados (usa pila)
-2. **ejercicio_complejo.py**: Implementar un sistema de cola de atención
+1. **ejercicio_simple.py**: Implementar una Pila
+2. **ejercicio_complejo.py**: Implementar una Cola de atención
