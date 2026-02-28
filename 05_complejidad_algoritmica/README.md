@@ -114,6 +114,7 @@ def busqueda_binaria(lista, objetivo):
 ## Ejemplos de optimización
 
 ### Malo: O(n²)
+Compara cada elemento de la lista con todos los demas. Para cada elemento de la lista recorre la lista completa
 ```python
 def tiene_duplicados_lento(lista):
     for i in range(len(lista)):
@@ -124,6 +125,7 @@ def tiene_duplicados_lento(lista):
 ```
 
 ### Bueno: O(n)
+Compara cada elemento de la vista con los que ya recorrió, evitando comparar más de una vez dos elementos
 ```python
 def tiene_duplicados_rapido(lista):
     vistos = set()

@@ -16,15 +16,16 @@ def identificar_complejidad(numero_funcion):
     return complejidades.get(numero_funcion)
 
 
-# Ejercicio complejo: Buscar duplicados rápido
-def buscar_duplicados_rapido(lista):
+# Ejercicio complejo: Encontrar pares que suman un objetivo
+def encontrar_pares_rapido(lista, objetivo):
     vistos = set()
-    duplicados = set()
+    pares = set()
 
-    for elemento in lista:
-        if elemento in vistos:
-            duplicados.add(elemento)
-        else:
-            vistos.add(elemento)
+    for num in lista:
+        complemento = objetivo - num
+        if complemento in vistos:
+            par = (min(complemento, num), max(complemento, num))
+            pares.add(par)
+        vistos.add(num)
 
-    return list(duplicados)
+    return list(pares)

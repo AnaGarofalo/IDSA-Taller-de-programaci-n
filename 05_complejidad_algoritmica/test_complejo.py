@@ -1,58 +1,59 @@
-import pytest
 import time
-from ejercicio_complejo import buscar_duplicados_rapido, buscar_duplicados_lento
+from ejercicio_complejo import encontrar_pares_rapido, encontrar_pares_lento
 
 
-def test_encuentra_duplicados():
-    resultado = buscar_duplicados_rapido([1, 2, 3, 2, 4, 3])
-    assert sorted(resultado) == [2, 3]
+def test_encuentra_pares_basico():
+    resultado = encontrar_pares_rapido([1, 2, 3, 4, 5], 6)
+    assert sorted(resultado) == [(1, 5), (2, 4)]
 
 
-def test_sin_duplicados():
-    assert buscar_duplicados_rapido([1, 2, 3]) == []
-
-
-def test_todos_iguales():
-    resultado = buscar_duplicados_rapido([1, 1, 1])
-    assert resultado == [1]
+def test_sin_pares():
+    assert encontrar_pares_rapido([1, 2, 3], 10) == []
 
 
 def test_lista_vacia():
-    assert buscar_duplicados_rapido([]) == []
+    assert encontrar_pares_rapido([], 5) == []
 
 
 def test_un_elemento():
-    assert buscar_duplicados_rapido([5]) == []
+    assert encontrar_pares_rapido([5], 10) == []
 
 
-def test_dos_iguales():
-    assert buscar_duplicados_rapido([3, 3]) == [3]
+def test_pares_con_mismo_numero():
+    resultado = encontrar_pares_rapido([3, 3], 6)
+    assert resultado == [(3, 3)]
 
 
-def test_dos_diferentes():
-    assert buscar_duplicados_rapido([3, 5]) == []
+def test_multiples_pares():
+    resultado = encontrar_pares_rapido([1, 5, 3, 7, 4, 2, 6], 8)
+    assert sorted(resultado) == [(1, 7), (2, 6), (3, 5)]
 
 
-def test_multiples_duplicados():
-    resultado = buscar_duplicados_rapido([1, 2, 1, 3, 2, 4, 3, 5])
-    assert sorted(resultado) == [1, 2, 3]
+def test_numeros_negativos():
+    resultado = encontrar_pares_rapido([-2, -1, 0, 1, 2, 3], 1)
+    assert sorted(resultado) == [(-2, 3), (-1, 2), (0, 1)]
 
 
-def test_duplicados_strings():
-    resultado = buscar_duplicados_rapido(["a", "b", "a", "c", "b"])
-    assert sorted(resultado) == ["a", "b"]
+def test_par_con_cero():
+    resultado = encontrar_pares_rapido([0, 5, -5, 10], 5)
+    assert sorted(resultado) == [(-5, 10), (0, 5)]
 
 
-def test_duplicado_una_vez_en_resultado():
-    # Aunque 1 aparece 4 veces, solo debe estar una vez en el resultado
-    resultado = buscar_duplicados_rapido([1, 1, 1, 1])
-    assert resultado == [1]
+def test_todos_iguales_no_suman():
+    assert encontrar_pares_rapido([2, 2, 2], 5) == []
+
+
+def test_pares_duplicados_solo_una_vez():
+    # Aunque hay múltiples 3s, el par (3, 3) solo debe aparecer una vez
+    resultado = encontrar_pares_rapido([3, 3, 3, 3], 6)
+    assert resultado == [(3, 3)]
 
 
 def test_mismo_resultado_que_version_lenta():
-    lista = [5, 3, 8, 3, 1, 8, 2, 5, 9]
-    rapido = sorted(buscar_duplicados_rapido(lista))
-    lento = sorted(buscar_duplicados_lento(lista))
+    lista = [1, 5, 7, 2, 9, 3, 8, 4, 6]
+    objetivo = 10
+    rapido = sorted(encontrar_pares_rapido(lista, objetivo))
+    lento = sorted(encontrar_pares_lento(lista, objetivo))
     assert rapido == lento
 
 
@@ -61,17 +62,18 @@ def test_es_realmente_mas_rapido():
     Verifica que la versión rápida es significativamente más rápida.
     Con O(n) vs O(n²), la diferencia debe ser notable en listas grandes.
     """
-    # Crear lista grande con algunos duplicados
-    lista_grande = list(range(5000)) + list(range(100))  # 5100 elementos, 100 duplicados
+    # Crear lista grande
+    lista_grande = list(range(3000))
+    objetivo = 2999  # Solo algunos pares válidos
 
     # Medir versión rápida
     inicio = time.time()
-    buscar_duplicados_rapido(lista_grande)
+    encontrar_pares_rapido(lista_grande, objetivo)
     tiempo_rapido = time.time() - inicio
 
     # Medir versión lenta
     inicio = time.time()
-    buscar_duplicados_lento(lista_grande)
+    encontrar_pares_lento(lista_grande, objetivo)
     tiempo_lento = time.time() - inicio
 
     # La versión rápida debería ser al menos 10 veces más rápida
