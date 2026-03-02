@@ -10,7 +10,7 @@ class Nodo:
 
 
 # Ejercicio simple: Lista enlazada con sobrecarga pythónica
-class ListaEnlazadaSimple:
+class ListaEnlazada:
     def __init__(self):
         self.cabeza = None
 
@@ -51,10 +51,10 @@ class ListaEnlazadaSimple:
         actual.siguiente = nuevo
 
 
-# Ejercicio complejo: Hereda de ListaEnlazadaSimple y agrega invertir()
-class ListaEnlazadaInvertible(ListaEnlazadaSimple):
+# Ejercicio complejo: Hereda de ListaEnlazada y agrega invertir()
+class ListaEnlazadaInvertible(ListaEnlazada):
     """
-    Hereda agregar() y a_lista() de ListaEnlazadaSimple.
+    Hereda agregar() y a_lista() de ListaEnlazada.
     Solo agrega el método invertir().
     """
 
