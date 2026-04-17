@@ -55,20 +55,27 @@ Podés agregar una condición para incluir solo algunos elementos:
 nueva_lista = [expresión for elemento in lista if condición]
 ```
 
-### Ejemplo: solo números pares
-
-```python
-numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-pares = [n for n in numeros if n % 2 == 0]
-# [2, 4, 6, 8, 10]
-```
-
 ### Ejemplo: palabras largas
 
 ```python
 palabras = ["sol", "estrella", "luz", "universo"]
 largas = [p for p in palabras if len(p) > 4]
 # ["estrella", "universo"]
+```
+
+---
+
+## Lambda: funciones pequeñas en una línea
+
+Las funciones lambda son funciones anónimas (sin nombre) para casos simples:
+
+```python
+# Función normal
+def doble(x):
+    return x * 2
+
+# Lambda equivalente
+doble = lambda x: x * 2
 ```
 
 ---
@@ -127,42 +134,15 @@ validos = list(filter(None, datos))
 
 ---
 
-## Lambda: funciones pequeñas en una línea
-
-Las funciones lambda son funciones anónimas (sin nombre) para casos simples:
-
-```python
-# Función normal
-def doble(x):
-    return x * 2
-
-# Lambda equivalente
-doble = lambda x: x * 2
-```
-
-### Uso con map y filter
-
-```python
-# Sumar 10 a cada elemento
-list(map(lambda x: x + 10, [1, 2, 3]))
-# [11, 12, 13]
-
-# Filtrar mayores a 5
-list(filter(lambda x: x > 5, [3, 6, 9, 2, 8]))
-# [6, 9, 8]
-```
-
----
-
 ## Comparación: ¿Cuándo usar cada uno?
 
-| Situación | Recomendación |
-|-----------|---------------|
-| Transformar y filtrar | List comprehension |
-| Solo transformar | Comprehension o map |
-| Solo filtrar | Comprehension o filter |
-| Función ya existente | map/filter |
-| Muy complejo | Loop tradicional |
+| Situación             | Recomendación          |
+| --------------------- | ---------------------- |
+| Transformar y filtrar | List comprehension     |
+| Solo transformar      | Comprehension o map    |
+| Solo filtrar          | Comprehension o filter |
+| Función ya existente  | map/filter             |
+| Muy complejo          | Loop tradicional       |
 
 ### Regla general
 

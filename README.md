@@ -8,6 +8,7 @@ Este curso contiene 8 temas con ejercicios prácticos para aprender conceptos de
 - pytest (para correr los tests)
 
 Para instalar pytest:
+
 ```bash
 pip install pytest
 ```
@@ -26,6 +27,7 @@ pip install pytest
 ```
 
 Cada carpeta contiene:
+
 - `README.md` - Explicación del tema
 - `ejercicio_simple.py` - Ejercicio inicial
 - `ejercicio_complejo.py` - Ejercicio avanzado
@@ -37,19 +39,28 @@ Cada carpeta contiene:
 ## Cómo trabajar con cada clase
 
 ### Paso 1: Leer el README
+
 Abrí el `README.md` de la carpeta y leé la explicación del tema. Tomáte tu tiempo para entender los conceptos y ejemplos.
 
 ### Paso 2: Resolver el ejercicio simple
+
 1. Abrí `ejercicio_simple.py`
 2. Leé las instrucciones y ejemplos en el docstring
 3. Completá la función donde dice `# TODO`
 4. Guardá el archivo
 
 ### Paso 3: Correr los tests
+
 Desde la carpeta del ejercicio, ejecutá:
 
 ```bash
 pytest test_simple.py -v
+```
+
+o en powershel
+
+```bash
+python -m pytest test_simple.py -v
 ```
 
 La opción `-v` (verbose) muestra el detalle de cada test.
@@ -57,9 +68,11 @@ La opción `-v` (verbose) muestra el detalle de cada test.
 Si los tests fallan, revisá el mensaje de error y corregí tu código.
 
 ### Paso 4: Si te trabás
+
 Abrí `tips.md` para ver pistas que te ayuden a resolver el ejercicio.
 
 ### Paso 5: Resolver el ejercicio complejo
+
 Una vez que pasen todos los tests del ejercicio simple, repetí el proceso con `ejercicio_complejo.py`:
 
 ```bash
@@ -69,6 +82,7 @@ pytest test_complejo.py -v
 ## Comandos útiles
 
 ### Correr los tests de un ejercicio específico
+
 ```bash
 # Ejercicio simple
 pytest test_simple.py -v
@@ -78,21 +92,25 @@ pytest test_complejo.py -v
 ```
 
 ### Correr todos los tests de una carpeta
+
 ```bash
 pytest -v
 ```
 
 ### Correr un test específico
+
 ```bash
 pytest test_simple.py::test_lista_vacia -v
 ```
 
 ### Ver solo los tests que fallan
+
 ```bash
 pytest -v --tb=short
 ```
 
 ### Parar en el primer error
+
 ```bash
 pytest -v -x
 ```

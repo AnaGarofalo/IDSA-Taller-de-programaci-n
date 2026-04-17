@@ -5,6 +5,7 @@
 ¿Por qué un programa tarda 1 segundo y otro tarda 3 horas haciendo "lo mismo"? La respuesta está en la complejidad algorítmica: cómo crece el tiempo de ejecución cuando crece la cantidad de datos.
 
 Entender esto te permite:
+
 - Elegir la solución más eficiente
 - Predecir si tu código va a funcionar con datos grandes
 - Identificar cuellos de botella
@@ -15,27 +16,26 @@ Usamos **O(algo)** para describir cómo crece el tiempo de ejecución. Nos impor
 
 ### Las complejidades más comunes
 
-| Notación | Nombre | Ejemplo | ¿Escala bien? |
-|----------|--------|---------|---------------|
-| O(1) | Constante | Acceder a lista[0] | Excelente |
-| O(log n) | Logarítmica | Búsqueda binaria | Muy bueno |
-| O(n) | Lineal | Recorrer una lista | Bueno |
-| O(n log n) | Linearítmica | Ordenar con sorted() | Aceptable |
-| O(n²) | Cuadrática | Doble loop anidado | Malo |
-| O(n³) | Cúbica | Triple loop anidado | Muy malo |
-| O(2ⁿ) | Exponencial | Fuerza bruta | Terrible |
+| Notación | Nombre      | Ejemplo             | ¿Escala bien? |
+| -------- | ----------- | ------------------- | ------------- |
+| O(1)     | Constante   | Acceder a lista[0]  | Excelente     |
+| O(log n) | Logarítmica | Búsqueda binaria    | Muy bueno     |
+| O(n)     | Lineal      | Recorrer una lista  | Bueno         |
+| O(n²)    | Cuadrática  | Doble loop anidado  | Malo          |
+| O(n³)    | Cúbica      | Triple loop anidado | Muy malo      |
+| O(2ⁿ)    | Exponencial | Fuerza bruta        | Terrible      |
 
 ### ¿Qué significa en la práctica?
 
 Para una lista de **1,000,000 elementos**:
 
 | Complejidad | Operaciones aproximadas |
-|-------------|------------------------|
-| O(1) | 1 |
-| O(log n) | 20 |
-| O(n) | 1,000,000 |
-| O(n log n) | 20,000,000 |
-| O(n²) | 1,000,000,000,000 |
+| ----------- | ----------------------- |
+| O(1)        | 1                       |
+| O(log n)    | 20                      |
+| O(n)        | 1,000,000               |
+| O(n log n)  | 20,000,000              |
+| O(n²)       | 1,000,000,000,000       |
 
 ¡La diferencia entre O(n) y O(n²) puede ser de segundos vs días!
 
@@ -114,7 +114,9 @@ def busqueda_binaria(lista, objetivo):
 ## Ejemplos de optimización
 
 ### Malo: O(n²)
+
 Compara cada elemento de la lista con todos los demas. Para cada elemento de la lista recorre la lista completa
+
 ```python
 def tiene_duplicados_lento(lista):
     for i in range(len(lista)):
@@ -125,7 +127,9 @@ def tiene_duplicados_lento(lista):
 ```
 
 ### Bueno: O(n)
+
 Compara cada elemento de la vista con los que ya recorrió, evitando comparar más de una vez dos elementos
+
 ```python
 def tiene_duplicados_rapido(lista):
     vistos = set()
